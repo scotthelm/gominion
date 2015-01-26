@@ -13,7 +13,20 @@ func RollCharacter() PlayerCharacter {
 	dex := makeAbilityRoll()
 	con := makeAbilityRoll()
 	cha := makeAbilityRoll()
-	return PlayerCharacter{selectName(), str, intel, wis, dex, con, cha, 1, 1, 1, 10, 12}
+	return PlayerCharacter{
+		selectName(),
+		str,
+		intel,
+		wis,
+		dex,
+		con,
+		cha,
+		1,
+		1,
+		1,
+		10,
+		12,
+	}
 }
 
 func makeAbilityRoll() int {

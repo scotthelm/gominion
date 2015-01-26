@@ -1,20 +1,17 @@
 package models
 
-import (
-	"github.com/scotthelm/gominion/db"
-)
+import ()
 
 type Race struct {
-	Name        string `db:"name"`
-	Subrace     string `db:"subrace"`
-	StrMod      int    `db:"str_mod"`
-	IntMod      int    `db:"int_mod"`
-	WisMod      int    `db:"wis_mod"`
-	DexMod      int    `db:"dex_mod"`
-	ConMod      int    `db:"con_mod"`
-	ChaMod      int    `db:"cha_mod"`
-	HitPointMod int    `db:"hit_point_mod"`
-	db.Entity
+	Id          int
+	Name        string
+	StrMod      int
+	IntMod      int
+	WisMod      int
+	DexMod      int
+	ConMod      int
+	ChaMod      int
+	HitPointMod int
 }
 
 func (r *Race) Create() (*Race, error) {

@@ -29,7 +29,7 @@ func CreateSql(e interface{}) string {
 		tag := t.Field(fieldPos).Tag.Get("db")
 		if tag != "" {
 			buffer.WriteString(fmt.Sprintf("%s, ", t.Field(fieldPos).Tag.Get("db")))
-			values.WriteString(fmt.Sprintf("$%d, ", counter))
+			values.WriteString(fmt.Sprint("?, "))
 			counter++
 		}
 	}
