@@ -17,4 +17,5 @@ var routes = Routes{
 	Route{"Index", "GET", "/", Index},
 	Route{"CampaignIndex", "GET", "/campaigns", CampaignIndex},
 	Route{"CampaignShow", "GET", "/campaigns/{campaignId}", CampaignShow},
+	Route{"CampaignCreate", "POST", "/campaigns", CampaignPost},
 }
