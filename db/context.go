@@ -21,5 +21,19 @@ func (c *Context) DBSync() {
 }
 
 func (c *Context) Migrate() {
-	c.DB.AutoMigrate(&models.Skill{})
+	c.DB.AutoMigrate(
+		&models.Skill{},
+		&models.Class{},
+		&models.Proficiency{},
+		&models.ProficiencyType{},
+		&models.PlayerCharacterSkill{},
+		&models.Equipment{},
+		&models.DamageType{},
+		&models.Spell{},
+		&models.SpellType{},
+		&models.Campaign{},
+		&models.Monster{},
+		&models.MonsterSkills{},
+		&models.PlayerCharacter{},
+	)
 }
