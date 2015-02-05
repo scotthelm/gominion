@@ -10,7 +10,7 @@ func NewRouter() *mux.Router {
 	for _, r := range routes {
 		var handler http.Handler
 		handler = r.HandlerFunc
-		handler = Logger(handler, r.Name)
+		handler = Logger(Recoverer(handler), r.Name)
 
 		router.Methods(r.Method).Path(r.Pattern).Name(r.Name).Handler(handler)
 	}

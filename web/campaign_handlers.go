@@ -26,5 +26,6 @@ func CampaignPost(w http.ResponseWriter, r *http.Request) {
 	var c m.Campaign
 	decoder.Decode(&c)
 	Ctx.DB.Save(&c)
+	json.NewEncoder(w).Encode(c)
 
 }
