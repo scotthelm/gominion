@@ -2,23 +2,31 @@ package web
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"github.com/scotthelm/gominion/db"
 	m "github.com/scotthelm/gominion/models"
 	"net/http"
+	"strconv"
 )
 
 var Ctx db.Context
 
 func CampaignIndex(w http.ResponseWriter, r *http.Request) {
-	campaigns := m.Campaigns{
-		m.Campaign{1, "The Moors Of Tel", ""},
-		m.Campaign{1, "The Legend of Malganis", ""},
-	}
+	var campaigns []m.Campaign
+	Ctx.DB.Find(&campaigns)
 	json.NewEncoder(w).Encode(campaigns)
 }
 
 func CampaignShow(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(m.Campaign{1, "The Moors of Tel", ""})
+	var campaign m.Campaign
+	id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
+	if err == nil {
+		Ctx.DB.Find(&campaign, id)
+		json.NewEncoder(w).Encode(campaign)
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("{ \"ok\" : false, \"error\" : \"failed to parse id\"}"))
+	}
 }
 
 func CampaignPost(w http.ResponseWriter, r *http.Request) {
@@ -27,5 +35,19 @@ func CampaignPost(w http.ResponseWriter, r *http.Request) {
 	decoder.Decode(&c)
 	Ctx.DB.Save(&c)
 	json.NewEncoder(w).Encode(c)
+
+}
+
+func CampaignDelete(w http.ResponseWriter, r *http.Request) {
+	var campaign m.Campaign
+	id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
+	if err == nil {
+		Ctx.DB.Find(&campaign, id)
+		Ctx.DB.Delete(&campaign)
+		json.NewEncoder(w).Encode(campaign)
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("{ \"ok\" : false, \"error\" : \"failed to parse id\"}"))
+	}
 
 }
