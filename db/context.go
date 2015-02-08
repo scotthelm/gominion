@@ -7,7 +7,7 @@ import (
 )
 
 type Context struct {
-	DB              gorm.DB
+	Db              gorm.DB
 	DriverType      string
 	ConnctionString string
 }
@@ -21,7 +21,7 @@ func (c *Context) DBSync() {
 }
 
 func (c *Context) Migrate() {
-	c.DB.AutoMigrate(
+	c.Db.AutoMigrate(
 		&models.Skill{},
 		&models.Class{},
 		&models.Proficiency{},
