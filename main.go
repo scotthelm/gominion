@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/GeertJohan/go.rice"
 	"github.com/scotthelm/gominion/db"
 	"github.com/scotthelm/gominion/web"
 	"io"
@@ -15,12 +16,19 @@ func main() {
 	if err != nil {
 		log.Fatal("Could not open logfile")
 	}
+
 	defer f.Close()
 
 	log.SetOutput(io.MultiWriter(os.Stdout, f))
+
 	router := web.NewRouter()
+	assets := rice.MustFindBox("assets")
+	assetsFS := http.StripPrefix("/assets/", http.FileServer(assets.HTTPBox()))
+	router.PathPrefix("/assets/").Handler(assetsFS)
+
 	web.Ctx = db.NewContext("sqlite3", "./gominion.db")
 	web.Ctx.Migrate()
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 

@@ -14,5 +14,6 @@ func NewRouter() *mux.Router {
 
 		router.Methods(r.Method).Path(r.Pattern).Name(r.Name).Handler(handler)
 	}
+
 	return router
 }
