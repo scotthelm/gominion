@@ -22,9 +22,9 @@ func main() {
 	log.SetOutput(io.MultiWriter(os.Stdout, f))
 
 	router := web.NewRouter()
-	assets := rice.MustFindBox("assets")
-	assetsFS := http.StripPrefix("/assets/", http.FileServer(assets.HTTPBox()))
-	router.PathPrefix("/assets/").Handler(assetsFS)
+	assets := rice.MustFindBox("public")
+	assetsFS := http.StripPrefix("/public/", http.FileServer(assets.HTTPBox()))
+	router.PathPrefix("/public/").Handler(assetsFS)
 
 	web.Ctx = db.NewContext("sqlite3", "./gominion.db")
 	web.Ctx.Migrate()

@@ -2,5 +2,5 @@
 *.log
 ./gominion
 /bower_components
-/assets
+/public
 /node_modules

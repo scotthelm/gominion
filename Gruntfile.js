@@ -2,8 +2,9 @@ var pkgjson = require('./package.json');
  
 var config = {
   pkg: pkgjson,
-  app: 'bower_components',
-  dist: 'assets'
+  lib: 'bower_components',
+  dist: 'public',
+  app: 'assets/src'
 }
  
 module.exports = function (grunt) {
@@ -12,32 +13,43 @@ module.exports = function (grunt) {
   grunt.initConfig({
     config: config,
     pkg: config.pkg,
+    watch: {
+      tasks: ['coffee', 'uglify'],
+      files: ['<%= config.app %>/coffee/*.coffee']
+    },
     copy: {
       dist: {
        files: [{
          expand: true,
-         cwd: '<%= config.app %>/font-awesome/css',
+         cwd: '<%= config.lib %>/font-awesome/css',
          src: 'font-awesome.min.css',
          dest: '<%= config.dist %>'
        },
        {
          expand: true,
-         cwd: '<%= config.app %>/bootstrap/dist/css',
+         cwd: '<%= config.lib %>/bootstrap/dist/css',
          src: 'bootstrap.min.css',
          dest: '<%= config.dist %>'
        },
        {
          expand: true,
-         cwd: '<%= config.app %>/bootstrap/dist/fonts',
+         cwd: '<%= config.lib %>/bootstrap/dist/fonts',
          src: './*',
          dest: '<%= config.dist %>'
        },
        {
          expand: true,
-         cwd: '<%= config.app %>/font-awesome/fonts',
+         cwd: '<%= config.lib %>/font-awesome/fonts',
          src: './*',
          dest: '<%= config.dist %>'
        }]
+      }
+    },
+    coffee: {
+      compile: {
+        files: {
+          '<%= config.app %>/js/app.js': ['<%= config.app %>/coffee/*.coffee'],
+        }
       }
     },
     uglify: {
@@ -48,19 +60,25 @@ module.exports = function (grunt) {
       dist: {
         files: {
           '<%= config.dist %>/lib.min.js': [
-            '<%= config.app %>/jquery/dist/jquery.js',
-            '<%= config.app %>/bootstrap/dist/js/bootstrap.js',
+            '<%= config.lib %>/jquery/dist/jquery.js',
+            '<%= config.lib %>/bootstrap/dist/js/bootstrap.js',
+            '<%= config.app %>/js/app.js',
+            '<%= config.lib %>/angularjs/angular.js',
           ]
         }
       }
     }
   });
- 
+
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
- 
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
   grunt.registerTask('default', [
+    'coffee',
     'copy',
     'uglify',
+    'watch',
   ]);
 };
