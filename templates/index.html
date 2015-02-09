@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Gominion</title>
+    <link href="/public/bootstrap.min.css" rel="stylesheet" media="all"/>
+  </head>
+  <body>
+    <div class="container" ng-app="app">
+      <header ng-include="'templates/nav.html'"></header>
+      <div ui-view></div>
+    </div>
+    <script src="/public/lib.min.js"></script>
+    <script src="/public/app.js"></script>
+  </body>
+</html>

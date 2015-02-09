@@ -1,4 +1,6 @@
 *.db
 *.log
 ./gominion
-
+/bower_components
+/public
+/node_modules
