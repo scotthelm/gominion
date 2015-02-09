@@ -8,11 +8,33 @@
       $urlRouterProvider.otherwise('/');
       return $stateProvider.state('home', {
         url: '/',
-        templateUrl: 'templates/home.html'
+        templateUrl: 'templates/home.html',
+        controller: 'homeCtrl'
       }).state('about', {
         url: '/about',
-        templateUrl: 'templates/about.html'
+        templateUrl: 'templates/about.html',
+        controller: 'aboutCtrl'
       });
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  angular.module('app').controller('aboutCtrl', [
+    '$scope', function($scope) {
+      $scope.title = "About";
+      return $scope.items = ['other', 'stuff', 'in here'];
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  angular.module('app').controller('homeCtrl', [
+    '$scope', function($scope) {
+      $scope.title = "Home";
+      return $scope.items = ['this', 'that', 'the other thing'];
     }
   ]);
 
