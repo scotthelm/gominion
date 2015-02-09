@@ -1,4 +1,4 @@
-app = angular.module 'app', [ 'ui.router' ]
+app = angular.module 'app', [ 'ui.router', 'app.controllers', 'app.services' ]
 app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateProvider) ->
   $urlRouterProvider.otherwise('/')
   $stateProvider.state(
@@ -11,5 +11,10 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     url: '/about'
     templateUrl: 'templates/about.html'
     controller: 'aboutCtrl'
+  ).state(
+    'campaigns',
+    url: '/campaigns'
+    templateUrl: 'templates/campaigns_new.html'
+    controller: 'campaignsListCtrl'
   )
 ]

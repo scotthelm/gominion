@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     config: config,
     pkg: config.pkg,
     watch: {
-      tasks: ['coffee', 'uglify'],
+      tasks: ['coffee', 'copy'],
       files: ['<%= config.app %>/coffee/*.coffee']
     },
     copy: {
@@ -42,6 +42,12 @@ module.exports = function (grunt) {
          cwd: '<%= config.lib %>/font-awesome/fonts',
          src: './*',
          dest: '<%= config.dist %>'
+       },
+       {
+         expand: true,
+         cwd: '<%= config.app %>/js/',
+         src: 'app.js',
+         dest: '<%= config.dist %>'
        }]
       }
     },
@@ -64,7 +70,7 @@ module.exports = function (grunt) {
             '<%= config.lib %>/bootstrap/dist/js/bootstrap.js',
             '<%= config.lib %>/angularjs/angular.js',
             '<%= config.lib %>/angular-ui-router/release/angular-ui-router.js',
-            '<%= config.app %>/js/app.js',
+            '<%= config.lib %>/angular-resource/angular-resource.min.js',
           ]
         }
       }
@@ -82,4 +88,5 @@ module.exports = function (grunt) {
     'uglify',
     'watch',
   ]);
+
 };
