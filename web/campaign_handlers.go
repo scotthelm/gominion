@@ -38,6 +38,18 @@ func CampaignPost(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func CampaignUpdate(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var c m.Campaign
+	decoder.Decode(&c)
+	var existing m.Campaign
+	Ctx.Db.Find(&existing)
+	existing.Name = c.Name
+	existing.Description = c.Description
+	Ctx.Db.Save(&existing)
+	json.NewEncoder(w).Encode(existing)
+}
+
 func CampaignDelete(w http.ResponseWriter, r *http.Request) {
 	var campaign m.Campaign
 	id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
