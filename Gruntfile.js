@@ -63,7 +63,7 @@ module.exports = function (grunt) {
             '<%= config.lib %>/jquery/dist/jquery.js',
             '<%= config.lib %>/bootstrap/dist/js/bootstrap.js',
             '<%= config.lib %>/angularjs/angular.js',
-            '<%= config.lib %>/angular-ui-router/angular-ui-router.js',
+            '<%= config.lib %>/angular-ui-router/release/angular-ui-router.js',
             '<%= config.app %>/js/app.js',
           ]
         }

@@ -5,6 +5,8 @@
   </head>
   <body>
     <div class="container" ng-app="app">
+      <header ng-include="'templates/nav.html'"></header>
+      <div ui-view></div>
     </div>
     <script src="/public/lib.min.js"></script>
   </body>

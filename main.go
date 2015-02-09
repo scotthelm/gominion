@@ -23,6 +23,7 @@ func main() {
 
 	router := web.NewRouter()
 	router.PathPrefix("/public/").Handler(assetsHandler())
+	router.PathPrefix("/templates/").Handler(templatesHandler())
 
 	web.Ctx = db.NewContext("sqlite3", "./gominion.db")
 	web.Ctx.Migrate()
@@ -33,4 +34,9 @@ func main() {
 func assetsHandler() http.Handler {
 	assets := rice.MustFindBox("public")
 	return http.StripPrefix("/public/", http.FileServer(assets.HTTPBox()))
+}
+
+func templatesHandler() http.Handler {
+	assets := rice.MustFindBox("templates")
+	return http.StripPrefix("/templates/", http.FileServer(assets.HTTPBox()))
 }
