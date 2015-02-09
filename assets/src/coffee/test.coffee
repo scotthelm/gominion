@@ -1,2 +1,2 @@
-jQuery() ->
-  alert('This is awesome!!!!')
+jQuery () ->
+  # noop

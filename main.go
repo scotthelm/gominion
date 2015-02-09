@@ -22,9 +22,7 @@ func main() {
 	log.SetOutput(io.MultiWriter(os.Stdout, f))
 
 	router := web.NewRouter()
-	assets := rice.MustFindBox("public")
-	assetsFS := http.StripPrefix("/public/", http.FileServer(assets.HTTPBox()))
-	router.PathPrefix("/public/").Handler(assetsFS)
+	router.PathPrefix("/public/").Handler(assetsHandler())
 
 	web.Ctx = db.NewContext("sqlite3", "./gominion.db")
 	web.Ctx.Migrate()
@@ -32,5 +30,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func setLogger() {
+func assetsHandler() http.Handler {
+	assets := rice.MustFindBox("public")
+	return http.StripPrefix("/public/", http.FileServer(assets.HTTPBox()))
 }

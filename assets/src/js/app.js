@@ -1,6 +1,4 @@
 (function() {
-  jQuery()(function() {
-    return alert('This is awesome!!!!');
-  });
+  jQuery(function() {});
 
 }).call(this);
