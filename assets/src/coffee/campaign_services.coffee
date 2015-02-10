@@ -14,7 +14,7 @@ services.factory 'CampaignsFactory', ['$resource', ($resource) ->
 
 services.factory 'CampaignFactory', ['$resource', ($resource) ->
   $resource(
-    '/api/campaign/:id',
+    '/api/campaigns/:id',
     {},
     show:
       method: 'GET'

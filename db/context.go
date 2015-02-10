@@ -14,6 +14,7 @@ type Context struct {
 
 func NewContext(driverType string, connectionString string) Context {
 	db, _ := gorm.Open(driverType, connectionString)
+	db.LogMode(true)
 	return Context{db, driverType, connectionString}
 }
 func (c *Context) DBSync() {

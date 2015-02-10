@@ -14,7 +14,12 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
   ).state(
     'campaigns',
     url: '/campaigns'
-    templateUrl: 'templates/campaigns_new.html'
+    templateUrl: 'templates/campaigns_list.html'
     controller: 'campaignsListCtrl'
+  ).state(
+    'campaigns_edit',
+    url: '/campaigns/:id'
+    templateUrl: 'templates/campaign_update.html'
+    controller: 'campaignDetailCtrl'
   )
 ]
