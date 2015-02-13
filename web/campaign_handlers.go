@@ -43,7 +43,11 @@ func CampaignUpdate(w http.ResponseWriter, r *http.Request) {
 	var c m.Campaign
 	decoder.Decode(&c)
 	var existing m.Campaign
-	Ctx.Db.Find(&existing)
+	id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	Ctx.Db.Find(&existing, id)
 	existing.Name = c.Name
 	existing.Description = c.Description
 	Ctx.Db.Save(&existing)

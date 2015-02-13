@@ -18,8 +18,13 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     controller: 'campaignsListCtrl'
   ).state(
     'campaigns_edit',
-    url: '/campaigns/:id'
+    url: '/campaigns/{id:int}'
     templateUrl: 'templates/campaign_update.html'
     controller: 'campaignDetailCtrl'
+  ).state(
+    'campaigns_new',
+    url: '/campaigns/new'
+    templateUrl: 'templates/campaign_update.html'
+    controller: 'campaignCreationCtrl'
   )
 ]

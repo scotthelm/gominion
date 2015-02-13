@@ -1,31 +1,42 @@
 app = angular.module('app.controllers', [])
 
-app.controller('campaignsListCtrl', [
+app.controller 'campaignsListCtrl', [
   '$scope',
   'CampaignsFactory',
   'CampaignFactory',
   '$location',
-  ($scope, CampaignsFactory, CampaignFactory, $location) ->
+  '$state',
+  ($scope, CampaignsFactory, CampaignFactory, $location, $state) ->
 
     $scope.editCampaign = (campaignId) ->
       $location.path "/campaigns/#{campaignId}"
 
     $scope.deleteCampaign = (campaignId) ->
-      CampaignFactory.delete id: campaignId
+      CampaignFactory.delete(id: campaignId).$promise.then () ->
+        $state.transitionTo($state.current, {}, {reload: true});
 
-    $scope.newCampaign = () ->
+    $scope.showNewCampaign = () ->
       $location.path "/campaigns/new"
 
     $scope.campaigns = CampaignsFactory.query()
-  ])
+  ] 
 
 app.controller('campaignCreationCtrl', [
   '$scope',
   'CampaignsFactory',
   '$location',
   ($scope, CampaignsFactory, $location) ->
+
     $scope.createNewCampaign = () ->
-      CampaignsFactory.newCampaign($scope.user)
+      CampaignsFactory.create($scope.campaign).$promise.then () ->
+        $location.path "/campaigns"
+
+    $scope.campaign =
+      id: ""
+      name: ""
+      description: ""
+
+    $scope.cancel = () ->
       $location.path "/campaigns"
   ])
 
@@ -35,11 +46,10 @@ app.controller('campaignDetailCtrl', [
   'CampaignFactory',
   '$location',
   ($scope, $stateParams, CampaignFactory, $location) ->
-    $scope.updateCampaign = ()->
 
-      debugger
-      CampaignFactory.update($scope.campaign)
-      $location.path "/campaigns"
+    $scope.updateCampaign = ()->
+      CampaignFactory.update($scope.campaign).$promise.then () ->
+        $location.path "/campaigns"
 
     $scope.cancel = ()->
       $location.path "/campaigns"
