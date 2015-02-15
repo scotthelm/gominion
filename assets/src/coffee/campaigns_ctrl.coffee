@@ -18,7 +18,12 @@ app.controller 'campaignsListCtrl', [
     $scope.showNewCampaign = () ->
       $location.path "/campaigns/new"
 
-    $scope.campaigns = CampaignsFactory.query()
+    $scope.campaigns = []
+    CampaignsFactory.query().$promise.then (data) ->
+      if data != null
+        $scope.campaigns = data
+      else
+        []
   ] 
 
 app.controller('campaignCreationCtrl', [

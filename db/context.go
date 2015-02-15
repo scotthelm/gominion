@@ -27,14 +27,13 @@ func (c *Context) Migrate() {
 		&models.Class{},
 		&models.Proficiency{},
 		&models.ProficiencyType{},
-		&models.PlayerCharacterSkill{},
 		&models.Equipment{},
 		&models.DamageType{},
 		&models.Spell{},
 		&models.SpellType{},
 		&models.Campaign{},
 		&models.Monster{},
-		&models.MonsterSkills{},
 		&models.PlayerCharacter{},
+		&models.Race{},
 	)
 }

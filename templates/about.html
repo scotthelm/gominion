@@ -1,5 +1,7 @@
 <h1>{{title}}</h1>
-<ul>
-  <li ng-repeat="item in items">{{item}}</li>
-</ul>
+<table class="table">
+  <tr ng-repeat="r in matrix_values">
+    <td ng-repeat="c in matrix_values">{{r * c}}</td> 
+  </tr>
+</table>
 
