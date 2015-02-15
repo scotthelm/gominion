@@ -27,4 +27,9 @@ var routes = Routes{
 	Route{"RaceCreate", "POST", "/api/races", CreateHandler(m.Race{})},
 	Route{"RaceDelete", "DELETE", "/api/races/{id}", DeleteHandler(m.Race{})},
 	Route{"RaceUpdate", "PUT", "/api/races/{id}", UpdateHandler(m.Race{})},
+	Route{"ClassIndex", "GET", "/api/classes", IndexHandler([]m.Class{})},
+	Route{"ClassShow", "GET", "/api/classes/{id}", ShowHandler(m.Class{})},
+	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
+	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},
+	Route{"ClassUpdate", "PUT", "/api/classes/{id}", UpdateHandler(m.Class{})},
 }
