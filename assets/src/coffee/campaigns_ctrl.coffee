@@ -2,24 +2,23 @@ app = angular.module('app.controllers', [])
 
 app.controller 'campaignsListCtrl', [
   '$scope',
-  'CampaignsFactory',
-  'CampaignFactory',
+  'ApiFactory',
   '$location',
   '$state',
-  ($scope, CampaignsFactory, CampaignFactory, $location, $state) ->
+  ($scope, ApiFactory, $location, $state) ->
 
     $scope.editCampaign = (campaignId) ->
       $location.path "/campaigns/#{campaignId}"
 
     $scope.deleteCampaign = (campaignId) ->
-      CampaignFactory.delete(id: campaignId).$promise.then () ->
+      ApiFactory.provider('/api/campaigns/:id').delete(id: campaignId).$promise.then () ->
         $state.transitionTo($state.current, {}, {reload: true});
 
     $scope.showNewCampaign = () ->
       $location.path "/campaigns/new"
 
     $scope.campaigns = []
-    CampaignsFactory.query().$promise.then (data) ->
+    ApiFactory.provider('/api/campaigns').query().$promise.then (data) ->
       if data != null
         $scope.campaigns = data
       else
@@ -28,13 +27,15 @@ app.controller 'campaignsListCtrl', [
 
 app.controller('campaignCreationCtrl', [
   '$scope',
-  'CampaignsFactory',
+  'ApiFactory',
   '$location',
-  ($scope, CampaignsFactory, $location) ->
+  ($scope, ApiFactory, $location) ->
 
     $scope.createNewCampaign = () ->
-      CampaignsFactory.create($scope.campaign).$promise.then () ->
-        $location.path "/campaigns"
+      ApiFactory
+        .provider('/api/campaigns/:id')
+        .create($scope.campaign).$promise.then () ->
+          $location.path "/campaigns"
 
     $scope.campaign =
       id: ""
@@ -48,16 +49,16 @@ app.controller('campaignCreationCtrl', [
 app.controller('campaignDetailCtrl', [
   '$scope',
   '$stateParams',
-  'CampaignFactory',
+  'ApiFactory',
   '$location',
-  ($scope, $stateParams, CampaignFactory, $location) ->
+  ($scope, $stateParams, ApiFactory, $location) ->
 
     $scope.updateCampaign = ()->
-      CampaignFactory.update($scope.campaign).$promise.then () ->
+      ApiFactory.provider('/api/campaigns/:id').update($scope.campaign).$promise.then () ->
         $location.path "/campaigns"
 
     $scope.cancel = ()->
       $location.path "/campaigns"
 
-    $scope.campaign = CampaignFactory.show(id: $stateParams.id)
+    $scope.campaign = ApiFactory.provider('/api/campaigns/:id').show(id: $stateParams.id)
   ])
