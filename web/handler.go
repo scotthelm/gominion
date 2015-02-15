@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/scotthelm/gominion/db"
-	"log"
+	// "log"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -16,7 +16,6 @@ func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ts := reflect.New(reflect.TypeOf(t)).Interface()
 		Ctx.Db.Find(ts)
-		log.Println(ts)
 		json.NewEncoder(w).Encode(ts)
 	}
 }
@@ -64,12 +63,10 @@ func UpdateHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		decoder := json.NewDecoder(r.Body)
 		ut := reflect.New(reflect.TypeOf(t)).Interface()
-		log.Println(strconv.ParseInt(mux.Vars(r)["id"], 10, 64))
 		id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
 		if err == nil {
 			decoder.Decode(ut)
 			reflect.ValueOf(ut).Elem().FieldByName("Id").SetInt(id)
-			log.Println(ut)
 			Ctx.Db.Save(ut)
 			json.NewEncoder(w).Encode(ut)
 		} else {
