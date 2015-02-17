@@ -13,10 +13,19 @@ import (
 
 var Ctx db.Context
 
+type QueryResult struct {
+	Page         string      `json:"page"`
+	PerPage      string      `json:"per_page"`
+	Result       interface{} `json:"result"`
+	TotalRecords int64       `json:"total_records"`
+}
+
 func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var orderBy, direction, page, perPage string
-		var offset, limit int64
+		var offset, limit, count int64
+
+		count = 4
 
 		orderBy = r.FormValue("order_by")
 		if orderBy == "" {
@@ -44,9 +53,11 @@ func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 			offset = (ipage * iperPage) - iperPage
 			limit = iperPage
 		}
-		ts := reflect.New(reflect.TypeOf(t)).Interface()
+		ts := reflect.New(reflect.SliceOf(reflect.TypeOf(t))).Interface()
+		model := reflect.New(reflect.TypeOf(t)).Interface()
 		Ctx.Db.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
-		json.NewEncoder(w).Encode(ts)
+		Ctx.Db.Model(model).Count(&count)
+		json.NewEncoder(w).Encode(QueryResult{page, perPage, ts, count})
 	}
 }
 
