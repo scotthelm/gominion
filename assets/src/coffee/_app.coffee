@@ -26,5 +26,20 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     url: '/campaigns/new'
     templateUrl: 'templates/campaign_update.html'
     controller: 'campaignCreationCtrl'
+  ).state(
+    'spell_types',
+    url: '/spell_types'
+    templateUrl: 'templates/spell_types_list.html'
+    controller: 'spellTypesListCtrl'
+  ).state(
+    'spell_types_edit',
+    url: '/spell_types/{id:int}'
+    templateUrl: 'templates/spell_types_update.html'
+    controller: 'spellTypesDetailCtrl'
+  ).state(
+    'spell_types_new',
+    url: '/spell_types/new'
+    templateUrl: 'templates/spell_types_update.html'
+    controller: 'spellTypesCreationCtrl'
   )
 ]

@@ -5,23 +5,23 @@
     <div class="form-group">
       <label class="col-sm-2 control-label" for="inputName">Name:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" id="inputName" ng-model="resource.name"/>
+        <input class="form-control" type="text" id="inputName" ng-model="campaign.name"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="inputDescription">Description</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" id="inputDescription" ng-model="resource.description"/>
+        <input class="form-control" type="text" id="inputDescription" ng-model="campaign.description"/>
       </div>
     </div>
     <div class="form-group">
       <div class="col-sm-12">
         <!-- user-detail.html: -->
         <a ng-click="cancel()" class="btn btn-small pull-right">cancel</a>
-        <a ng-show="resource.id" ng-click="updateResource()" class="btn btn-small btn-primary pull-right">update</a>
+        <a ng-show="campaign.id" ng-click="updateCampaign()" class="btn btn-small btn-primary pull-right">update</a>
 
         <!-- user-creation.html: -->
-        <a ng-hide="resource.id" ng-click="createNewResource()" class="btn btn-small btn-primary pull-right">create</a>
+        <a ng-hide="campaign.id" ng-click="createNewCampaign()" class="btn btn-small btn-primary pull-right">create</a>
       </div>
     </div>
   </form>

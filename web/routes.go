@@ -32,4 +32,9 @@ var routes = Routes{
 	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
 	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},
 	Route{"ClassUpdate", "PUT", "/api/classes/{id}", UpdateHandler(m.Class{})},
+	Route{"SpellTypeIndex", "GET", "/api/spell_types", IndexHandler([]m.SpellType{})},
+	Route{"SpellTypeShow", "GET", "/api/spell_types/{id}", ShowHandler(m.SpellType{})},
+	Route{"SpellTypeCreate", "POST", "/api/spell_types", CreateHandler(m.SpellType{})},
+	Route{"SpellTypeDelete", "DELETE", "/api/spell_types/{id}", DeleteHandler(m.SpellType{})},
+	Route{"SpellTypeUpdate", "PUT", "/api/spell_types/{id}", UpdateHandler(m.SpellType{})},
 }

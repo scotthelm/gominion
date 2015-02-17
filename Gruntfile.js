@@ -15,7 +15,7 @@ module.exports = function (grunt) {
     pkg: config.pkg,
     watch: {
       tasks: ['coffee', 'copy'],
-      files: ['<%= config.app %>/coffee/*.coffee']
+      files: ['<%= config.app %>/coffee/**/*.coffee']
     },
     copy: {
       dist: {
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
     coffee: {
       compile: {
         files: {
-          '<%= config.app %>/js/app.js': ['<%= config.app %>/coffee/*.coffee'],
+          '<%= config.app %>/js/app.js': ['<%= config.app %>/coffee/**/*.coffee'],
         }
       }
     },
