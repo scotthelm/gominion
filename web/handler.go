@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/scotthelm/gominion/db"
 	// "log"
@@ -14,8 +15,37 @@ var Ctx db.Context
 
 func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		var orderBy, direction, page, perPage string
+		var offset, limit int64
+
+		orderBy = r.FormValue("order_by")
+		if orderBy == "" {
+			orderBy = "id"
+		}
+
+		direction = r.FormValue("direction")
+		if direction == "" {
+			direction = "asc"
+		}
+
+		page = r.FormValue("page")
+		if page == "" {
+			page = "1"
+		}
+
+		perPage = r.FormValue("per_page")
+		if perPage == "" {
+			perPage = "10"
+		}
+
+		if page != "" && perPage != "" {
+			ipage, _ := strconv.ParseInt(page, 10, 64)
+			iperPage, _ := strconv.ParseInt(perPage, 10, 64)
+			offset = (ipage * iperPage) - iperPage
+			limit = iperPage
+		}
 		ts := reflect.New(reflect.TypeOf(t)).Interface()
-		Ctx.Db.Find(ts)
+		Ctx.Db.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
 		json.NewEncoder(w).Encode(ts)
 	}
 }
