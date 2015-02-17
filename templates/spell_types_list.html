@@ -1,20 +1,18 @@
-<a class="btn btn-small btn-success pull-right" ng-click="showNewCampaign()">New</a>
-<h1>Campaigns</h1>
+<a class="btn btn-small btn-success pull-right" ng-click="showNewResource()">New</a>
+<h1>Spell Types</h1>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="cmp in campaigns">
-      <td>{{cmp.name}}</td>
-      <td>{{cmp.description}}</td>
+    <tr ng-repeat="r in resources">
+      <td>{{r.name}}</td>
       <td>
-        <a class="btn btn-small btn-info" ui-sref="campaigns_edit({id: cmp.id})">edit</a>
-        <a class="btn btn-small btn-danger" ng-click="deleteCampaign(cmp.id)">delete</a>
+        <a class="btn btn-small btn-info" ui-sref="spell_types_edit({id: r.id})">edit</a>
+        <a class="btn btn-small btn-danger" ng-click="deleteResource(r.id)">delete</a>
       </td>
     </tr>
   </tbody>
