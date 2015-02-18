@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="r in resources">
+    <tr ng-repeat="r in resources.result">
       <td>{{r.name}}</td>
       <td>
         <a class="btn btn-small btn-info" ui-sref="spell_types_edit({id: r.id})">edit</a>
@@ -17,3 +17,4 @@
     </tr>
   </tbody>
 </table>
+<pagination resources="resources"></pagination>

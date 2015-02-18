@@ -14,7 +14,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
   ).state(
     'campaigns',
     url: '/campaigns'
-    templateUrl: 'templates/campaigns_list.html'
+    templateUrl: 'templates/campaigns_list.html?order_by&page&per_page&direction'
     controller: 'campaignsListCtrl'
   ).state(
     'campaigns_edit',
@@ -43,3 +43,18 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     controller: 'spellTypesCreationCtrl'
   )
 ]
+
+app.directive 'pagination', () ->
+  restrict: 'EA'
+  scope:
+    resources: '='
+    resources_type: '='
+    show_pages: '='
+  controller: ($scope) ->
+    this.current_page = resources.page
+    this.previous_page = resources.page - 1
+    this.pages = []
+    this.next_page = resources.page + 1
+    # noop
+  templateUrl: 'templates/pagination.html'
+

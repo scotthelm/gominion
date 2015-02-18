@@ -21,7 +21,15 @@ app.listController = (resource_type) ->
         $location.path "/#{self.resourceType}/new"
 
       $scope.resources = []
-      ApiFactory.provider("/api/#{self.resourceType}").query().$promise.then (data) ->
+      debugger
+      ApiFactory
+        .provider("/api/#{self.resourceType}")
+        .query(
+          order_by: $location.search().order_by
+          direction: $location.search().direction
+          page: $location.search().page
+          per_page: $location.search().per_page
+        ).$promise.then (data) ->
         if data != null
           $scope.resources = data
         else

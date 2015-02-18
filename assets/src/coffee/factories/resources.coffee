@@ -7,7 +7,11 @@ services.factory 'ApiFactory', ['$resource', ($resource) ->
       {}
       query:
         method: 'GET'
-        isArray: true
+        params:
+          order_by: '@order_by'
+          direction: '@direction'
+          page: '@page'
+          per_page: '@per_page'
       create:
         method: 'POST'
       show:
