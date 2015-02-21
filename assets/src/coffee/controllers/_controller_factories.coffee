@@ -1,5 +1,11 @@
 app = angular.module( 'app.controllers', [])
 
+app.location_defaults = 
+  page: 1
+  per_page: 10
+  order_by: 'name'
+  direction: 'asc'
+
 app.listController = (resource_type) ->
   [
     '$scope',
@@ -10,30 +16,37 @@ app.listController = (resource_type) ->
       self = this
       self.resourceType = resource_type
 
+      $scope.resourceType = self.resourceType
+
       $scope.editResource = (resourceId) ->
         $location.path "/#{self.resourceType}/#{resourceId}"
 
       $scope.deleteResource = (resourceId) ->
         ApiFactory.provider("/api/#{self.resourceType}/:id").delete(id: resourceId).$promise.then () ->
-          $state.transitionTo($state.current, {}, {reload: true});
+          $state.transitionTo($state.current, {
+            order_by: $location.search().order_by
+            direction: $location.search().direction
+            page: $location.search().page
+            per_page: $location.search().per_page
+          }, {reload: true});
 
       $scope.showNewResource = () ->
         $location.path "/#{self.resourceType}/new"
 
-      $scope.resources = []
-      debugger
-      ApiFactory
+      $scope.resources = {}
+      $scope.apiService = ApiFactory
         .provider("/api/#{self.resourceType}")
         .query(
           order_by: $location.search().order_by
           direction: $location.search().direction
           page: $location.search().page
           per_page: $location.search().per_page
-        ).$promise.then (data) ->
+        )
+      $scope.apiService.$promise.then (data) ->
         if data != null
           $scope.resources = data
         else
-          []
+          $scope.resources = {}
   ]
 
 app.creationController = (resource_type) ->
@@ -41,7 +54,8 @@ app.creationController = (resource_type) ->
     '$scope',
     'ApiFactory',
     '$location',
-    ($scope, ApiFactory, $location) ->
+    '$state',
+    ($scope, ApiFactory, $location, $state) ->
       self = this
       self.resourceType = resource_type
 
@@ -54,7 +68,9 @@ app.creationController = (resource_type) ->
       $scope.resource =  {}
 
       $scope.cancel = () ->
-        $location.path "/#{self.resourceType}"
+        $state.transitionTo(self.resourceType,
+          app.location_defaults
+        )
   ]
 
  app.detailController = (resource_type) ->
@@ -63,7 +79,8 @@ app.creationController = (resource_type) ->
     '$stateParams',
     'ApiFactory',
     '$location',
-    ($scope, $stateParams, ApiFactory, $location) ->
+    '$state',
+    ($scope, $stateParams, ApiFactory, $location, $state) ->
       self = this
       self.resourceType = resource_type
 
@@ -73,10 +90,10 @@ app.creationController = (resource_type) ->
           .update($scope.resource)
           .$promise
           .then () ->
-            $location.path "/#{self.resourceType}"
+            $state.transitionTo(self.resourceType, app.location_defaults)
 
       $scope.cancel = ()->
-        $location.path "/#{self.resourceType}"
+        $state.transitionTo(self.resourceType, app.location_defaults)
 
       $scope.resource = ApiFactory.provider("/api/#{self.resourceType}/:id").show(id: $stateParams.id)
   ]

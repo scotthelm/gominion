@@ -13,8 +13,8 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     controller: 'aboutCtrl'
   ).state(
     'campaigns',
-    url: '/campaigns'
-    templateUrl: 'templates/campaigns_list.html?order_by&page&per_page&direction'
+    url: '/campaigns?order_by&page&per_page&direction'
+    templateUrl: 'templates/campaigns_list.html'
     controller: 'campaignsListCtrl'
   ).state(
     'campaigns_edit',
@@ -28,7 +28,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     controller: 'campaignCreationCtrl'
   ).state(
     'spell_types',
-    url: '/spell_types'
+    url: '/spell_types?order_by&page&per_page&direction'
     templateUrl: 'templates/spell_types_list.html'
     controller: 'spellTypesListCtrl'
   ).state(
@@ -44,17 +44,53 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
   )
 ]
 
-app.directive 'pagination', () ->
+app.directive 'pagination', ['$state', ($state) ->
   restrict: 'EA'
   scope:
-    resources: '='
-    resources_type: '='
-    show_pages: '='
+    apiService: '=apiService'
+    resourceType: '=resourceType'
   controller: ($scope) ->
-    this.current_page = resources.page
-    this.previous_page = resources.page - 1
-    this.pages = []
-    this.next_page = resources.page + 1
-    # noop
+    $scope.paginator = 
+      total_records: 0
+      total_pages: 0
+      current_page: 1
+      current_chapter: 1
+      per_page: 10
+      pages_per_chapter: 5
+      total_chapters: 1
+      chapter: []
+      resource_type: $scope.resourceType
+      interval: {}
+      order_by: "name"
+      direction: "asc"
+    $scope.apiService.$promise.then (data) ->
+      total_records = data.total_records
+      per_page = data.per_page
+      $scope.paginator.total_pages = Math.ceil(total_records / per_page)
+      $scope.paginator.current_page = parseInt(data.page)
+      $scope.paginator.per_page = parseInt(data.per_page)
+      $scope.paginator.total_records = parseInt(data.total_records)
+      $scope.paginate($scope.paginator)
+    $scope.paginate = (p) ->
+      p.total_chapters = Math.ceil(p.total_pages / p.pages_per_chapter)
+      p.current_chapter = Math.ceil(p.current_page / p.pages_per_chapter)
+      p.interval = 
+        lbound:
+          (p.current_chapter * p.pages_per_chapter) - p.pages_per_chapter + 1
+        rbound:
+          if p.total_pages >= p.current_chapter * p.pages_per_chapter
+            p.current_chapter * p.pages_per_chapter + 1
+          else
+            p.total_pages + 1
+      (p.chapter.push({page: i, current: i == p.current_page}) ) for i in [p.interval.lbound...p.interval.rbound]      
+          
+
+    $scope.goToState = (page) ->
+      $state.go($scope.paginator.resource_type,
+        page: page,
+        location: true
+      )
+
   templateUrl: 'templates/pagination.html'
+]
 

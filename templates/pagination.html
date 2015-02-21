@@ -1,3 +1,19 @@
-<ul>
-  <li ng-repeat="res in resources.result">{{res.name}}</li>
-</ul>
+{{paginator.current_page * paginator.per_page - paginator.per_page + 1}} - 
+{{paginator.total_records > paginator.current_page * paginator.per_page ? paginator.current_page * paginator.per_page : paginator.total_records}} of {{paginator.total_records}}
+<nav>
+  <ul class="pagination">
+    <li ng-hide="paginator.current_chapter==1">
+      <a href="#" aria-label="Previous" ng-click="goToState(paginator.interval.lbound -1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li ng-repeat="page in paginator.chapter" ng-class="{'active' : page.current == true}">
+    <a ng-click="goToState(page.page)">{{page.page}}</a>
+    </li>
+    <li ng-show="paginator.current_chapter < paginator.total_chapters">
+      <a ng-click="goToState(paginator.interval.rbound)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
