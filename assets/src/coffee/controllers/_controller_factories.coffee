@@ -1,10 +1,10 @@
 app = angular.module( 'app.controllers', [])
 
 app.location_defaults = 
-  page: 1
-  per_page: 10
   order_by: 'name'
   direction: 'asc'
+  page: 1
+  per_page: 8
 
 app.listController = (resource_type) ->
   [
@@ -23,12 +23,7 @@ app.listController = (resource_type) ->
 
       $scope.deleteResource = (resourceId) ->
         ApiFactory.provider("/api/#{self.resourceType}/:id").delete(id: resourceId).$promise.then () ->
-          $state.transitionTo($state.current, {
-            order_by: $location.search().order_by
-            direction: $location.search().direction
-            page: $location.search().page
-            per_page: $location.search().per_page
-          }, {reload: true});
+          $state.transitionTo($state.current, app.location_defaults, {reload: true});
 
       $scope.showNewResource = () ->
         $location.path "/#{self.resourceType}/new"
@@ -68,9 +63,7 @@ app.creationController = (resource_type) ->
       $scope.resource =  {}
 
       $scope.cancel = () ->
-        $state.transitionTo(self.resourceType,
-          app.location_defaults
-        )
+        $state.transitionTo(self.resourceType, app.location_defaults)
   ]
 
  app.detailController = (resource_type) ->

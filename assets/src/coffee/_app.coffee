@@ -41,6 +41,36 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     url: '/spell_types/new'
     templateUrl: 'templates/spell_types_update.html'
     controller: 'spellTypesCreationCtrl'
+  ).state(
+    'races',
+    url: '/races?order_by&page&per_page&direction'
+    templateUrl: 'templates/races_list.html'
+    controller: 'racesListCtrl'
+  ).state(
+    'races_edit',
+    url: '/races/{id:int}'
+    templateUrl: 'templates/races_update.html'
+    controller: 'racesDetailCtrl'
+  ).state(
+    'races_new',
+    url: '/races/new'
+    templateUrl: 'templates/races_update.html'
+    controller: 'racesCreationCtrl'
+  ).state(
+    'proficiency_types',
+    url: '/proficiency_types?order_by&page&per_page&direction'
+    templateUrl: 'templates/proficiency_types_list.html'
+    controller: 'proficiencyTypesListCtrl'
+  ).state(
+    'proficiency_types_edit',
+    url: '/proficiency_types/{id:int}'
+    templateUrl: 'templates/proficiency_types_update.html'
+    controller: 'proficiencyTypesDetailCtrl'
+  ).state(
+    'proficiency_types_new',
+    url: '/proficiency_types/new'
+    templateUrl: 'templates/proficiency_types_update.html'
+    controller: 'proficiencyTypesCreationCtrl'
   )
 ]
 
