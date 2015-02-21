@@ -22,8 +22,11 @@ app.listController = (resource_type) ->
         $location.path "/#{self.resourceType}/#{resourceId}"
 
       $scope.deleteResource = (resourceId) ->
-        ApiFactory.provider("/api/#{self.resourceType}/:id").delete(id: resourceId).$promise.then () ->
-          $state.transitionTo($state.current, app.location_defaults, {reload: true});
+        ApiFactory
+          .provider("/api/#{self.resourceType}/:id")
+          .delete(id: resourceId)
+          .$promise.then () ->
+            $state.transitionTo($state.current, app.location_defaults, {reload: true});
 
       $scope.showNewResource = () ->
         $location.path "/#{self.resourceType}/new"
@@ -58,7 +61,7 @@ app.creationController = (resource_type) ->
         ApiFactory
           .provider("/api/#{self.resourceType}")
           .create($scope.resource).$promise.then () ->
-            $location.path "/#{self.resourceType}"
+            $state.transitionTo(self.resourceType, app.location_defaults)
 
       $scope.resource =  {}
 
