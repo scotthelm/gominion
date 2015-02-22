@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 	"github.com/scotthelm/gominion/db"
 	// "log"
 	"net/http"
@@ -20,7 +21,7 @@ type QueryResult struct {
 	TotalRecords int64       `json:"total_records"`
 }
 
-func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
+func IndexHandler(t interface{}, preloads ...string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var orderBy, direction, page, perPage string
 		var offset, limit, count int64
@@ -47,18 +48,25 @@ func IndexHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
 			perPage = "10"
 		}
 
-		if page != "" && perPage != "" {
-			ipage, _ := strconv.ParseInt(page, 10, 64)
-			iperPage, _ := strconv.ParseInt(perPage, 10, 64)
-			offset = (ipage * iperPage) - iperPage
-			limit = iperPage
-		}
+		ipage, _ := strconv.ParseInt(page, 10, 64)
+		iperPage, _ := strconv.ParseInt(perPage, 10, 64)
+		offset = (ipage * iperPage) - iperPage
+		limit = iperPage
+
 		ts := reflect.New(reflect.SliceOf(reflect.TypeOf(t))).Interface()
 		model := reflect.New(reflect.TypeOf(t)).Interface()
-		Ctx.Db.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
+		pdb := doPreloads(&Ctx.Db, preloads)
+		pdb.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
 		Ctx.Db.Model(model).Count(&count)
 		json.NewEncoder(w).Encode(QueryResult{page, perPage, ts, count})
 	}
+}
+
+func doPreloads(db *gorm.DB, preload []string) *gorm.DB {
+	for _, v := range preload {
+		db = db.Preload(v)
+	}
+	return db
 }
 
 func ShowHandler(t interface{}) func(http.ResponseWriter, *http.Request) {

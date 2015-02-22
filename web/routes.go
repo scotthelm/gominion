@@ -46,4 +46,10 @@ var routes = Routes{
 	Route{"ProficiencyTypeCreate", "POST", "/api/proficiency_types", CreateHandler(m.ProficiencyType{})},
 	Route{"ProficiencyTypeDelete", "DELETE", "/api/proficiency_types/{id}", DeleteHandler(m.ProficiencyType{})},
 	Route{"ProficiencyTypeUpdate", "PUT", "/api/proficiency_types/{id}", UpdateHandler(m.ProficiencyType{})},
+
+	Route{"ProficiencyIndex", "GET", "/api/proficiencies", IndexHandler(m.Proficiency{}, "ProficiencyType")},
+	Route{"ProficiencyShow", "GET", "/api/proficiencies/{id}", ShowHandler(m.Proficiency{})},
+	Route{"ProficiencyCreate", "POST", "/api/proficiencies", CreateHandler(m.Proficiency{})},
+	Route{"ProficiencyDelete", "DELETE", "/api/proficiencies/{id}", DeleteHandler(m.Proficiency{})},
+	Route{"ProficiencyUpdate", "PUT", "/api/proficiencies/{id}", UpdateHandler(m.Proficiency{})},
 }

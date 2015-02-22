@@ -15,3 +15,7 @@ app.controller 'racesDetailCtrl', app.detailController('races')
 app.controller 'proficiencyTypesListCtrl', app.listController('proficiency_types')
 app.controller 'proficiencyTypesCreationCtrl', app.creationController('proficiency_types')
 app.controller 'proficiencyTypesDetailCtrl', app.detailController('proficiency_types')
+
+app.controller 'proficienciesListCtrl', app.listController('proficiencies')
+app.controller 'proficienciesCreationCtrl', app.creationController('proficiencies', ['proficiency_types'])
+app.controller 'proficienciesDetailCtrl', app.detailController('proficiencies', ['proficiency_types'])

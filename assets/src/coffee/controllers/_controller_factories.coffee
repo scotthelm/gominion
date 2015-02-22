@@ -47,7 +47,7 @@ app.listController = (resource_type) ->
           $scope.resources = {}
   ]
 
-app.creationController = (resource_type) ->
+app.creationController = (resource_type, preloads) ->
   [
     '$scope',
     'ApiFactory',
@@ -63,13 +63,27 @@ app.creationController = (resource_type) ->
           .create($scope.resource).$promise.then () ->
             $state.transitionTo(self.resourceType, app.location_defaults)
 
+      (
+        $scope[pre] =
+        ApiFactory
+          .provider("/api/#{pre}")
+          .query(
+            order_by: 'name'
+            page: 1
+            per_page: 200
+          )
+        $scope[pre].$promise.then (data) ->
+          $scope["#{pre}_data"] = data
+
+      ) for pre in preloads
+
       $scope.resource =  {}
 
       $scope.cancel = () ->
         $state.transitionTo(self.resourceType, app.location_defaults)
   ]
 
- app.detailController = (resource_type) ->
+ app.detailController = (resource_type, preloads) ->
   [
     '$scope',
     '$stateParams',
@@ -80,6 +94,12 @@ app.creationController = (resource_type) ->
       self = this
       self.resourceType = resource_type
 
+      $scope.createNewResource = () ->
+        ApiFactory
+          .provider("/api/#{self.resourceType}")
+          .create($scope.resource).$promise.then () ->
+            $state.transitionTo(self.resourceType, app.location_defaults)
+
       $scope.updateResource = ()->
         ApiFactory
           .provider("/api/#{self.resourceType}/#{$scope.resource.id}")
@@ -87,6 +107,20 @@ app.creationController = (resource_type) ->
           .$promise
           .then () ->
             $state.transitionTo(self.resourceType, app.location_defaults)
+      (
+        $scope[pre] =
+        ApiFactory
+          .provider("/api/#{pre}")
+          .query(
+            order_by: 'name'
+            page: 1
+            per_page: 200
+          )
+        $scope[pre].$promise.then (data) ->
+          $scope["#{pre}_data"] = data
+
+      ) for pre in preloads
+
 
       $scope.cancel = ()->
         $state.transitionTo(self.resourceType, app.location_defaults)

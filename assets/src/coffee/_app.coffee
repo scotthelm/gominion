@@ -71,6 +71,21 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     url: '/proficiency_types/new'
     templateUrl: 'templates/proficiency_types_update.html'
     controller: 'proficiencyTypesCreationCtrl'
+  ).state(
+    'proficiencies',
+    url: '/proficiencies?order_by&page&per_page&direction'
+    templateUrl: 'templates/proficiencies_list.html'
+    controller: 'proficienciesListCtrl'
+  ).state(
+    'proficiencies_edit',
+    url: '/proficiencies/{id:int}'
+    templateUrl: 'templates/proficiencies_update.html'
+    controller: 'proficienciesDetailCtrl'
+  ).state(
+    'proficiencies_new',
+    url: '/proficiencies/new'
+    templateUrl: 'templates/proficiencies_update.html'
+    controller: 'proficienciesDetailCtrl'
   )
 ]
 
