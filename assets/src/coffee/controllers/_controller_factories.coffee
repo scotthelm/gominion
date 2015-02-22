@@ -47,42 +47,6 @@ app.listController = (resource_type) ->
           $scope.resources = {}
   ]
 
-app.creationController = (resource_type, preloads) ->
-  [
-    '$scope',
-    'ApiFactory',
-    '$location',
-    '$state',
-    ($scope, ApiFactory, $location, $state) ->
-      self = this
-      self.resourceType = resource_type
-
-      $scope.createNewResource = () ->
-        ApiFactory
-          .provider("/api/#{self.resourceType}")
-          .create($scope.resource).$promise.then () ->
-            $state.transitionTo(self.resourceType, app.location_defaults)
-
-      (
-        $scope[pre] =
-        ApiFactory
-          .provider("/api/#{pre}")
-          .query(
-            order_by: 'name'
-            page: 1
-            per_page: 200
-          )
-        $scope[pre].$promise.then (data) ->
-          $scope["#{pre}_data"] = data
-
-      ) for pre in preloads
-
-      $scope.resource =  {}
-
-      $scope.cancel = () ->
-        $state.transitionTo(self.resourceType, app.location_defaults)
-  ]
-
  app.detailController = (resource_type, preloads) ->
   [
     '$scope',
@@ -93,6 +57,7 @@ app.creationController = (resource_type, preloads) ->
     ($scope, $stateParams, ApiFactory, $location, $state) ->
       self = this
       self.resourceType = resource_type
+      preloads = [] unless preloads
 
       $scope.createNewResource = () ->
         ApiFactory

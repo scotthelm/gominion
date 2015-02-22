@@ -25,7 +25,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     'campaigns_new',
     url: '/campaigns/new'
     templateUrl: 'templates/campaign_update.html'
-    controller: 'campaignCreationCtrl'
+    controller: 'campaignDetailCtrl'
   ).state(
     'spell_types',
     url: '/spell_types?order_by&page&per_page&direction'
@@ -40,7 +40,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     'spell_types_new',
     url: '/spell_types/new'
     templateUrl: 'templates/spell_types_update.html'
-    controller: 'spellTypesCreationCtrl'
+    controller: 'spellTypesDetailCtrl'
   ).state(
     'races',
     url: '/races?order_by&page&per_page&direction'
@@ -55,7 +55,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     'races_new',
     url: '/races/new'
     templateUrl: 'templates/races_update.html'
-    controller: 'racesCreationCtrl'
+    controller: 'racesDetailCtrl'
   ).state(
     'proficiency_types',
     url: '/proficiency_types?order_by&page&per_page&direction'
@@ -70,7 +70,7 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
     'proficiency_types_new',
     url: '/proficiency_types/new'
     templateUrl: 'templates/proficiency_types_update.html'
-    controller: 'proficiencyTypesCreationCtrl'
+    controller: 'proficiencyTypesDetailCtrl'
   ).state(
     'proficiencies',
     url: '/proficiencies?order_by&page&per_page&direction'
