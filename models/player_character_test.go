@@ -4,38 +4,60 @@ import (
 	"testing"
 )
 
-func TestCharacterName(t *testing.T) {
-	pc := PlayerCharacter{"Bob", 9, 9, 9, 9, 9, 9, 1, 1, 1, 10, 12}
-	if pc.Name != "Bob" {
-		t.Errorf("Name was not set. Expecting 'Bob', got: '%s'", pc.Name)
+func TestAbilityCheck(t *testing.T) {
+	pc := testCharacter("Jeff", map[string]int{"str": 12, "int": 10, "wis": 15, "dex": 10, "con": 10, "cha": 10})
+	if pc.StrCheck(12, 11) == false {
+		t.Errorf("StrengthCheck should be true, got false")
+	}
+	if pc.IntCheck(12, 11) == true {
+		t.Errorf("IntCheck should be false, got true")
+	}
+	if pc.WisCheck(12, 11) == false {
+		t.Errorf("WisCheck should be true, got false")
+	}
+	if pc.DexCheck(12, 11) == true {
+		t.Errorf("DexCheck should be false, got true")
+	}
+	if pc.ConCheck(12, 11) == true {
+		t.Errorf("ConCheck should be false, got true")
+	}
+	if pc.ChaCheck(12, 11) == true {
+		t.Errorf("ChaCheck should be false, got true")
 	}
 }
 
-func TestCharacterAttributes(t *testing.T) {
-	pc := PlayerCharacter{"Jimmy", 9, 9, 9, 9, 9, 9, 1, 1, 1, 10, 12}
-	if pc.Str != 9 {
-		t.Errorf("Str should be 9, got %d", pc.Str)
-	}
-	if pc.Int != 9 {
-		t.Errorf("Int should be 9, got %d", pc.Int)
-	}
-	if pc.Wis != 9 {
-		t.Errorf("Wis should be 9, got %d", pc.Wis)
-	}
-	if pc.Dex != 9 {
-		t.Errorf("Dex should be 9, got %d", pc.Dex)
-	}
-	if pc.Con != 9 {
-		t.Errorf("Con should be 9, got %d", pc.Con)
-	}
-	if pc.Cha != 9 {
-		t.Errorf("Cha should be 9, got %d", pc.Cha)
+func TestProficiency(t *testing.T) {
+	pc := testCharacter("Jeff", map[string]int{"str": 12, "int": 10, "wis": 15, "dex": 10, "con": 10, "cha": 10})
+	if pc.HasProficiency("All Weapons") == false {
+		t.Errorf("Expected All Weapons HasProficiency to be true, got false")
 	}
 }
 
-func TestPCRoll(t *testing.T) {
-	pc := RollCharacter()
-	if pc.Str < 3 || pc.Str > 18 {
-		t.Errorf("Str should be between 3 and 18, got %d", pc.Str)
-	}
+func testCharacter(name string, abilities map[string]int) PlayerCharacter {
+	return PlayerCharacter{
+		1,
+		name,
+		abilities["str"],
+		abilities["int"],
+		abilities["wis"],
+		abilities["dex"],
+		abilities["con"],
+		abilities["cha"],
+		1,
+		10,
+		12,
+		Class{},
+		1,
+		Race{},
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		nil,
+		nil,
+		nil,
+		[]Proficiency{Proficiency{1, "All Weapons", ProficiencyType{1, "Weapon"}, 1}}}
 }

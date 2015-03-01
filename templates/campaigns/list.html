@@ -1,0 +1,22 @@
+<a class="btn btn-sm btn-success pull-right" ng-click="showNewResource()">New</a>
+<h1>Campaigns</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="cmp in resources.result">
+      <td>{{cmp.name}}</td>
+      <td>{{cmp.description}}</td>
+      <td>
+        <a class="btn btn-sm btn-info" ui-sref="campaigns_edit({id: cmp.id})">edit</a>
+        <a class="btn btn-sm btn-danger" ng-click="deleteResource(cmp.id)">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination api-service="apiService" resource-type="campaigns"></pagination>

@@ -14,3 +14,9 @@ app.controller 'proficiencyTypesDetailCtrl', app.detailController('proficiency_t
 
 app.controller 'proficienciesListCtrl', app.listController('proficiencies')
 app.controller 'proficienciesDetailCtrl', app.detailController('proficiencies', ['proficiency_types'])
+
+app.controller 'skillsListCtrl', app.listController('skills')
+app.controller 'skillsDetailCtrl', app.detailController('skills')
+
+app.controller 'classesListCtrl', app.listController('classes')
+app.controller 'classesDetailCtrl', app.detailController('classes', ['proficiencies', 'skills'])

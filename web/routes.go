@@ -1,8 +1,9 @@
 package web
 
 import (
-	m "github.com/scotthelm/gominion/models"
 	"net/http"
+
+	m "github.com/scotthelm/gominion/models"
 	// "reflect"
 )
 
@@ -52,4 +53,16 @@ var routes = Routes{
 	Route{"ProficiencyCreate", "POST", "/api/proficiencies", CreateHandler(m.Proficiency{})},
 	Route{"ProficiencyDelete", "DELETE", "/api/proficiencies/{id}", DeleteHandler(m.Proficiency{})},
 	Route{"ProficiencyUpdate", "PUT", "/api/proficiencies/{id}", UpdateHandler(m.Proficiency{})},
+
+	Route{"SkillIndex", "GET", "/api/skills", IndexHandler(m.Skill{})},
+	Route{"SkillShow", "GET", "/api/skills/{id}", ShowHandler(m.Skill{})},
+	Route{"SkillCreate", "POST", "/api/skills", CreateHandler(m.Skill{})},
+	Route{"SkillDelete", "DELETE", "/api/skills/{id}", DeleteHandler(m.Skill{})},
+	Route{"SkillUpdate", "PUT", "/api/skills/{id}", UpdateHandler(m.Skill{})},
+
+	Route{"ClassIndex", "GET", "/api/classes", IndexHandler(m.Class{}, "Proficiency", "Skill")},
+	Route{"ClassShow", "GET", "/api/classes/{id}", ShowHandler(m.Class{})},
+	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
+	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},
+	Route{"ClassUpdate", "PUT", "/api/classes/{id}", UpdateHandler(m.Class{})},
 }

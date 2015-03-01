@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/GeertJohan/go.rice"
-	"github.com/scotthelm/gominion/db"
-	"github.com/scotthelm/gominion/web"
 	"io"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/GeertJohan/go.rice"
+	"github.com/scotthelm/gominion/db"
+	"github.com/scotthelm/gominion/web"
 )
 
 func main() {

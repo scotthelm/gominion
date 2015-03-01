@@ -1,0 +1,32 @@
+<a class="btn btn-sm btn-success pull-right" ng-click="showNewResource()">New</a>
+<h1>Races</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Str Mod</th>
+      <th>Int Mod</th>
+      <th>Wis Mod</th>
+      <th>Dex Mod</th>
+      <th>Con Mod</th>
+      <th>Cha Mod</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="res in resources.result">
+      <td>{{res.name}}</td>
+      <td>{{res.str_mod}}</td>
+      <td>{{res.int_mod}}</td>
+      <td>{{res.wis_mod}}</td>
+      <td>{{res.dex_mod}}</td>
+      <td>{{res.con_mod}}</td>
+      <td>{{res.cha_mod}}</td>
+      <td>
+        <a class="btn btn-sm btn-info" ui-sref="races_edit({id: res.id})">edit</a>
+        <a class="btn btn-sm btn-danger" ng-click="deleteResource(res.id)">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination api-service="apiService" resource-type="'races'"></pagination>

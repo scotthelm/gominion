@@ -1,0 +1,22 @@
+<a class="btn btn-sm btn-success pull-right" ng-click="showNewResource()">New</a>
+<h1>Skills</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="r in resources.result">
+      <td>{{r.name}}</td>
+      <td>{{r.type}}</td>
+      <td>
+        <a class="btn btn-sm btn-info" ui-sref="skills_edit({id: r.id})">edit</a>
+        <a class="btn btn-sm btn-danger" ng-click="deleteResource(r.id)">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination api-service="apiService" resource-type="'skills'"></pagination>

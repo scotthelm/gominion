@@ -1,0 +1,20 @@
+<a class="btn btn-sm btn-success pull-right" ng-click="showNewResource()">New</a>
+<h1>Spell Types</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="r in resources.result">
+      <td>{{r.name}}</td>
+      <td>
+        <a class="btn btn-sm btn-info" ui-sref="spell_types_edit({id: r.id})">edit</a>
+        <a class="btn btn-sm btn-danger" ng-click="deleteResource(r.id)">delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination api-service="apiService" resource-type="'spell_types'"></pagination>

@@ -14,78 +14,108 @@ app.config ['$urlRouterProvider', '$stateProvider', ($urlRouterProvider, $stateP
   ).state(
     'campaigns',
     url: '/campaigns?order_by&page&per_page&direction'
-    templateUrl: 'templates/campaigns_list.html'
+    templateUrl: 'templates/campaigns/list.html'
     controller: 'campaignsListCtrl'
   ).state(
     'campaigns_edit',
     url: '/campaigns/{id:int}'
-    templateUrl: 'templates/campaign_update.html'
+    templateUrl: 'templates/campaigns/update.html'
     controller: 'campaignDetailCtrl'
   ).state(
     'campaigns_new',
     url: '/campaigns/new'
-    templateUrl: 'templates/campaign_update.html'
+    templateUrl: 'templates/campaigns/update.html'
     controller: 'campaignDetailCtrl'
   ).state(
     'spell_types',
     url: '/spell_types?order_by&page&per_page&direction'
-    templateUrl: 'templates/spell_types_list.html'
+    templateUrl: 'templates/spell_types/list.html'
     controller: 'spellTypesListCtrl'
   ).state(
     'spell_types_edit',
     url: '/spell_types/{id:int}'
-    templateUrl: 'templates/spell_types_update.html'
+    templateUrl: 'templates/spell_types/update.html'
     controller: 'spellTypesDetailCtrl'
   ).state(
     'spell_types_new',
     url: '/spell_types/new'
-    templateUrl: 'templates/spell_types_update.html'
+    templateUrl: 'templates/spell_types/update.html'
     controller: 'spellTypesDetailCtrl'
   ).state(
     'races',
     url: '/races?order_by&page&per_page&direction'
-    templateUrl: 'templates/races_list.html'
+    templateUrl: 'templates/races/list.html'
     controller: 'racesListCtrl'
   ).state(
     'races_edit',
     url: '/races/{id:int}'
-    templateUrl: 'templates/races_update.html'
+    templateUrl: 'templates/races/update.html'
     controller: 'racesDetailCtrl'
   ).state(
     'races_new',
     url: '/races/new'
-    templateUrl: 'templates/races_update.html'
+    templateUrl: 'templates/races/update.html'
     controller: 'racesDetailCtrl'
   ).state(
     'proficiency_types',
     url: '/proficiency_types?order_by&page&per_page&direction'
-    templateUrl: 'templates/proficiency_types_list.html'
+    templateUrl: 'templates/proficiency_types/list.html'
     controller: 'proficiencyTypesListCtrl'
   ).state(
     'proficiency_types_edit',
     url: '/proficiency_types/{id:int}'
-    templateUrl: 'templates/proficiency_types_update.html'
+    templateUrl: 'templates/proficiency_types/update.html'
     controller: 'proficiencyTypesDetailCtrl'
   ).state(
     'proficiency_types_new',
     url: '/proficiency_types/new'
-    templateUrl: 'templates/proficiency_types_update.html'
+    templateUrl: 'templates/proficiency_types/update.html'
     controller: 'proficiencyTypesDetailCtrl'
   ).state(
     'proficiencies',
     url: '/proficiencies?order_by&page&per_page&direction'
-    templateUrl: 'templates/proficiencies_list.html'
+    templateUrl: 'templates/proficiencies/list.html'
     controller: 'proficienciesListCtrl'
   ).state(
     'proficiencies_edit',
     url: '/proficiencies/{id:int}'
-    templateUrl: 'templates/proficiencies_update.html'
+    templateUrl: 'templates/proficiencies/update.html'
     controller: 'proficienciesDetailCtrl'
   ).state(
     'proficiencies_new',
     url: '/proficiencies/new'
-    templateUrl: 'templates/proficiencies_update.html'
+    templateUrl: 'templates/proficiencies/update.html'
     controller: 'proficienciesDetailCtrl'
+  ).state(
+    'skills',
+    url: '/skills?order_by&page&per_page&direction'
+    templateUrl: 'templates/skills/list.html'
+    controller: 'skillsListCtrl'
+  ).state(
+    'skills_edit',
+    url: '/skills/{id:int}'
+    templateUrl: 'templates/skills/update.html'
+    controller: 'skillsDetailCtrl'
+  ).state(
+    'skills_new',
+    url: '/skills/new'
+    templateUrl: 'templates/skills/update.html'
+    controller: 'skillsDetailCtrl'
+  ).state(
+    'classes',
+    url: '/classes?order_by&page&per_page&direction'
+    templateUrl: 'templates/classes/list.html'
+    controller: 'classesListCtrl'
+  ).state(
+    'classes_edit',
+    url: '/classes/{id:int}'
+    templateUrl: 'templates/classes/update.html'
+    controller: 'classesDetailCtrl'
+  ).state(
+    'classes_new',
+    url: '/classes/new'
+    templateUrl: 'templates/classes/update.html'
+    controller: 'classesDetailCtrl'
   )
 ]
 
@@ -119,7 +149,7 @@ app.directive 'pagination', ['$state', ($state) ->
     $scope.paginate = (p) ->
       p.total_chapters = Math.ceil(p.total_pages / p.pages_per_chapter)
       p.current_chapter = Math.ceil(p.current_page / p.pages_per_chapter)
-      p.interval = 
+      p.interval =
         lbound:
           (p.current_chapter * p.pages_per_chapter) - p.pages_per_chapter + 1
         rbound:
@@ -127,7 +157,7 @@ app.directive 'pagination', ['$state', ($state) ->
             p.current_chapter * p.pages_per_chapter + 1
           else
             p.total_pages + 1
-      (p.chapter.push({page: i, current: i == p.current_page}) ) for i in [p.interval.lbound...p.interval.rbound]      
+      (p.chapter.push({page: i, current: i == p.current_page}) ) for i in [p.interval.lbound...p.interval.rbound]
           
 
     $scope.goToState = (page) ->
