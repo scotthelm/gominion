@@ -4,12 +4,22 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Hit Die</th>
+      <th>Frequency</th>
+      <th>Hit Die Avg</th>
+      <th>Proficiencies</th>
+      <th>Skills</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="res in resources.result">
       <td>{{res.name}}</td>
+      <td>{{res.hit_die_number}}</td>
+      <td>{{res.hit_die_frequency}}</td>
+      <td>{{res.hit_die_average}}</td>
+      <td>{{res.proficiencies}}</td>
+      <td>{{res.skills}}</td>
       <td>
         <a class="btn btn-sm btn-info" ui-sref="classes_edit({id: res.id})">edit</a>
         <a class="btn btn-sm btn-danger" ng-click="deleteResource(res.id)">delete</a>
