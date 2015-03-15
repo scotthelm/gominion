@@ -16,8 +16,8 @@ type Class struct {
 	HitDieNumber    int           `json:"hit_die_number"`
 	HitDieFrequency int           `json:"hit_die_frequency"`
 	HitDieAverage   int           `json:"hit_die_average"`
-	Proficiencies   []Proficiency `gorm:"many2many:class_proficiencies;";json:"proficiencies"`
-	Skills          []Skill       `gorm:"many2many:class_skills;";json:"skills"`
+	Proficiencies   []Proficiency `gorm:"many2many:class_proficiencies;" json:"proficiencies"`
+	Skills          []Skill       `gorm:"many2many:class_skills;" json:"skills"`
 }
 
 type DamageType struct {

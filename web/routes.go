@@ -30,12 +30,6 @@ var routes = Routes{
 	Route{"RaceDelete", "DELETE", "/api/races/{id}", DeleteHandler(m.Race{})},
 	Route{"RaceUpdate", "PUT", "/api/races/{id}", UpdateHandler(m.Race{})},
 
-	Route{"ClassIndex", "GET", "/api/classes", IndexHandler(m.Class{})},
-	Route{"ClassShow", "GET", "/api/classes/{id}", ShowHandler(m.Class{})},
-	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
-	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},
-	Route{"ClassUpdate", "PUT", "/api/classes/{id}", UpdateHandler(m.Class{})},
-
 	Route{"SpellTypeIndex", "GET", "/api/spell_types", IndexHandler(m.SpellType{})},
 	Route{"SpellTypeShow", "GET", "/api/spell_types/{id}", ShowHandler(m.SpellType{})},
 	Route{"SpellTypeCreate", "POST", "/api/spell_types", CreateHandler(m.SpellType{})},
@@ -60,7 +54,7 @@ var routes = Routes{
 	Route{"SkillDelete", "DELETE", "/api/skills/{id}", DeleteHandler(m.Skill{})},
 	Route{"SkillUpdate", "PUT", "/api/skills/{id}", UpdateHandler(m.Skill{})},
 
-	Route{"ClassIndex", "GET", "/api/classes", IndexHandler(m.Class{}, "Proficiency", "Skill")},
+	Route{"ClassIndex", "GET", "/api/classes", ClassesIndexHandler},
 	Route{"ClassShow", "GET", "/api/classes/{id}", ShowHandler(m.Class{})},
 	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
 	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},
