@@ -54,7 +54,7 @@ var routes = Routes{
 	Route{"SkillDelete", "DELETE", "/api/skills/{id}", DeleteHandler(m.Skill{})},
 	Route{"SkillUpdate", "PUT", "/api/skills/{id}", UpdateHandler(m.Skill{})},
 
-	Route{"ClassIndex", "GET", "/api/classes", ClassesIndexHandler},
+	Route{"ClassIndex", "GET", "/api/classes", IndexHandler(m.Class{}, "Proficiencies", "Skills")},
 	Route{"ClassShow", "GET", "/api/classes/{id}", ShowHandler(m.Class{})},
 	Route{"ClassCreate", "POST", "/api/classes", CreateHandler(m.Class{})},
 	Route{"ClassDelete", "DELETE", "/api/classes/{id}", DeleteHandler(m.Class{})},

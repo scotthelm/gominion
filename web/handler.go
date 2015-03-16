@@ -3,8 +3,8 @@ package web
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
 	"github.com/scotthelm/gominion/db"
 	// "log"
 	"net/http"
@@ -54,19 +54,31 @@ func IndexHandler(t interface{}, preloads ...string) func(http.ResponseWriter, *
 		limit = iperPage
 
 		ts := reflect.New(reflect.SliceOf(reflect.TypeOf(t))).Interface()
+		fmt.Println(ts)
 		model := reflect.New(reflect.TypeOf(t)).Interface()
-		pdb := doPreloads(&Ctx.Db, preloads)
-		pdb.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
+		Ctx.Db.Limit(limit).Offset(offset).Order(fmt.Sprintf("%s %s", orderBy, direction)).Find(ts)
 		Ctx.Db.Model(model).Count(&count)
+		result := reflect.ValueOf(ts).Elem()
+		for i := 0; i < result.Len(); i++ {
+			for _, prof := range preloads {
+				val := reflect.New(result.Index(i).FieldByName(prof).Type()).Interface()
+				fmt.Println(reflect.TypeOf(val))
+				Ctx.Db.Model(result.Index(i).Interface()).
+					Association(prof).
+					Find(val)
+				result.Index(i).FieldByName(prof).Set(reflect.Indirect(reflect.ValueOf(val)))
+			}
+		}
 		json.NewEncoder(w).Encode(QueryResult{page, perPage, ts, count})
 	}
 }
 
-func doPreloads(db *gorm.DB, preload []string) *gorm.DB {
-	for _, v := range preload {
-		db = db.Preload(v)
+func doPreloads(collection []interface{}, preload []string) {
+	for i, _ := range collection {
+		for _, v := range preload {
+			fmt.Println(i, v)
+		}
 	}
-	return db
 }
 
 func ShowHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
