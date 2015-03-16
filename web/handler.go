@@ -62,10 +62,11 @@ func IndexHandler(t interface{}, preloads ...string) func(http.ResponseWriter, *
 		for i := 0; i < result.Len(); i++ {
 			for _, prof := range preloads {
 				val := reflect.New(result.Index(i).FieldByName(prof).Type()).Interface()
-				fmt.Println(reflect.TypeOf(val))
-				Ctx.Db.Model(result.Index(i).Interface()).
-					Association(prof).
-					Find(val)
+				if result.Index(i).FieldByName(prof).Kind() == reflect.Slice {
+					Ctx.Db.Model(result.Index(i).Interface()).Related(val, prof)
+				} else {
+					Ctx.Db.Model(result.Index(i).Interface()).Related(val)
+				}
 				result.Index(i).FieldByName(prof).Set(reflect.Indirect(reflect.ValueOf(val)))
 			}
 		}
