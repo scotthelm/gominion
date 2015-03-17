@@ -82,12 +82,22 @@ func doPreloads(collection []interface{}, preload []string) {
 	}
 }
 
-func ShowHandler(t interface{}) func(http.ResponseWriter, *http.Request) {
+func ShowHandler(t interface{}, preloads ...string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		st := reflect.New(reflect.TypeOf(t)).Interface()
 		id, err := strconv.ParseInt(mux.Vars(r)["id"], 10, 64)
 		if err == nil {
 			Ctx.Db.Find(st, id)
+			for _, prof := range preloads {
+				fmt.Println(st)
+				val := reflect.New(reflect.Indirect(reflect.ValueOf(st)).FieldByName(prof).Type()).Interface()
+				if reflect.Indirect(reflect.ValueOf(st)).FieldByName(prof).Kind() == reflect.Slice {
+					Ctx.Db.Model(st).Related(val, prof)
+				} else {
+					Ctx.Db.Model(st).Related(val)
+				}
+				reflect.Indirect(reflect.ValueOf(st)).FieldByName(prof).Set(reflect.Indirect(reflect.ValueOf(val)))
+			}
 			json.NewEncoder(w).Encode(st)
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
