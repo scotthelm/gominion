@@ -35,8 +35,28 @@
         <select class="form-control" ng-model="resource.proficiencies_data" ng-options="p.id as p.name for p in proficiencies.result"></select>
       </div>
       <div class="col-sm-2">
-        <a ng-click="addProficiency(this)" class="btn btn-sm btn-success" style="width:100%">Add</a>
+        <a ng-click="addProficiency(resource, resource.proficiencies_data)" class="btn btn-sm btn-success" style="width:100%">Add</a>
       </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-2">&nbsp;</div>
+      <div class="col-sm-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Proficiency</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat=" prof in resource.proficiencies">
+              <td>{{prof.name}}</td>
+              <td><a ng-click="removeProficiency(resource, prof)" class="btn btn-ms btn-danger">Remove</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-2">&nbsp;</div>
     </div>
     <div class="form-group">
       <div class="col-sm-12">

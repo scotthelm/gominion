@@ -23,6 +23,14 @@ app.controller 'classesDetailCtrl',
   app.detailController('classes',
   ['proficiencies', 'skills'],
   (scope, stateParams, apifactory, location, state) ->
-    scope.addProficiency = (elem) ->
-      alert('weee')
+    scope.addProficiency = (res, prof) ->
+      proficiency = (prof) ->
+        for index, p of scope.proficiencies.result
+          if prof == p.id
+            return p
+      res.proficiencies.push proficiency prof
+      console.log(res)
+
+    scope.removeProficiency = (res, prof) ->
+      res.proficiencies.splice(res.proficiencies.indexOf(prof), 1)
 )
