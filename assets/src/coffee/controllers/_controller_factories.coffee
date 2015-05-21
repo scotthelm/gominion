@@ -47,7 +47,7 @@ app.listController = (resource_type) ->
           $scope.resources = {}
   ]
 
- app.detailController = (resource_type, preloads) ->
+ app.detailController = (resource_type, preloads, extension) ->
   [
     '$scope',
     '$stateParams',
@@ -91,4 +91,6 @@ app.listController = (resource_type) ->
         $state.transitionTo(self.resourceType, app.location_defaults)
 
       $scope.resource = ApiFactory.provider("/api/#{self.resourceType}/:id").show(id: $stateParams.id)
+      if extension
+        extension($scope, $stateParams, ApiFactory, $location, $state)
   ]

@@ -19,4 +19,10 @@ app.controller 'skillsListCtrl', app.listController('skills')
 app.controller 'skillsDetailCtrl', app.detailController('skills')
 
 app.controller 'classesListCtrl', app.listController('classes')
-app.controller 'classesDetailCtrl', app.detailController('classes', ['proficiencies', 'skills'])
+app.controller 'classesDetailCtrl',
+  app.detailController('classes',
+  ['proficiencies', 'skills'],
+  (scope, stateParams, apifactory, location, state) ->
+    scope.addProficiency = (elem) ->
+      alert('weee')
+)
